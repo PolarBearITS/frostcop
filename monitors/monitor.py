@@ -24,21 +24,19 @@ class monitor:
 		for link in self.links:
 			reqs += (session.get(link),)
 		self.responses = [r.result() for r in reqs]
-		# print(self.responses)
 		self.soups = []
 		if self.needs_soup:
 			for resp in self.responses:
 				self.soups.append(self.soupify(resp))
 
 	def request(self, link):
-		return requests.get(link)
+		return requests.get(link, timeout=5)
 			
 	def soupify(self, response):
 		return bsoup(response.content, 'html.parser')
 
 	def run(self):
 		self.ctime = time.time()
-		print(self.url)
 		self.refresh()
 		print('refresh done')
 		self.scrape()
@@ -50,11 +48,7 @@ class monitor:
 			threads.append(t)
 		for t in threads:
 			t.join()
-		print(time.time()-self.ctime)
-
-class request:
-	def __init__(self, link):
-		self.response = requests.get(link)
+		print(len(self.links), time.time()-self.ctime)
 
 class product:
 	def __init__(self, uid, name, price, stock, **kwargs):

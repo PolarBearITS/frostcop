@@ -6,6 +6,7 @@ class supreme(monitor.monitor):
 	def refresh(self):
 		self.links = []
 		home = self.request(self.url + '/shop/all')
+		print(home)
 		for div in self.soupify(home).find_all('div', {'class': 'inner-article'}):
 			self.links.append(self.url + div.find('a')['href'])
 

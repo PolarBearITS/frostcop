@@ -2,7 +2,12 @@ import importlib
 monitors = ['supreme']
 
 def run_mon(mon):
-	mon.run()
+	while True:
+		try:
+			mon.run()
+		except KeyboardInterrupt:
+			print('Interrupted by user.')
+			quit()
 
 threads = []
 for name in monitors:

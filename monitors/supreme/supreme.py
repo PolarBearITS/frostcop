@@ -7,8 +7,10 @@ class supreme(monitor.monitor):
 	def refresh(self):
 		self.links = []
 		home = self.request(self.url + '/shop/all')
+		print(home)
 		for div in self.soupify(home).find_all('div', {'class': 'inner-article'}):
-			self.links.append(self.url + div.find('a')['href'])
+			link = self.url + div.find('a')['href']
+			self.links.append(link)
 
 	def check(self, page_index):
 		page = self.soups[page_index]
@@ -19,6 +21,7 @@ class supreme(monitor.monitor):
 		sizes = []
 		if select:
 			sizes = [option.text for option in select.find_all('option')]
+		print(sizes)
 		stock = bool(page.find('fieldset', {'id': 'add-remove-buttons'}).find('input'))
 		prod = monitor.product(self.links[page_index], name, price, stock, variant=color, sizes=sizes)
 		self.update(prod)

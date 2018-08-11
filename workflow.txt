@@ -1,0 +1,10 @@
+if one single link:
+	scrape single link
+else:
+	refresh links
+	scrape each link
+
+for each product scraped:
+	if new or restock:
+		notify discord
+

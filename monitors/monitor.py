@@ -11,10 +11,21 @@ class monitor:
 		pass
 
 	def refresh(self):
+		"""
+		If a monitor has a list of links it must check,
+		it overrides the refresh function. This is not
+		required, so it is implemented here as an empty
+		method to prevent errors.
+		"""
 		pass
 
 	def check(self):
-		raise NotImplementedError("check_stock must be defined in child monitor class.")
+		"""
+		All monitors must have a method to check the
+		stock of their items. If a monitor class does
+		not override this method, an error is thrown.
+		"""
+		raise NotImplementedError("check must be defined in child monitor class.")
 
 	def scrape(self):
 		n = len(self.links)
@@ -45,10 +56,23 @@ class monitor:
 		print(self.webhook, repr(product), notification_type)
 
 	def request(self, link):
+		"""
+		Returns an HTTP GET request for the specified
+		web address, and throws an error after a
+		timeout of 5 seconds.
+		"""
 		return requests.get(link, timeout=5)
 			
 	def soupify(self, response):
-		return bsoup(response.content, 'html.parser')
+		"""
+		Uses BeautifulSoup4 to return the HTML content
+		of the specified HTTP response, as obtained
+		using the requests module. "response" is not
+		a web address, but an already pinged response
+		object generated from an address.
+		"""
+		print('souping')
+		return bsoup(response.content, 'lxml')
 
 	def run(self):
 		self.ctime = time.time()

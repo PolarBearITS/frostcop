@@ -1,5 +1,5 @@
 import importlib
-monitors = ['supreme']
+monitors = ['snkrs']
 
 def run_mon(mon):
 	while True:
@@ -11,7 +11,6 @@ def run_mon(mon):
 
 threads = []
 for name in monitors:
-	# for i in range(25):
 	s = name.split('-')
 	if len(s) == 1:
 		m = getattr(importlib.import_module('monitors'), name)()

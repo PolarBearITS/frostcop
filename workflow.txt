@@ -8,3 +8,16 @@ for each product scraped:
 	if new or restock:
 		notify discord
 
+pseudocode:
+for each monitor:
+	p = process(target=run_monitor)
+	p.start()
+
+def run_monitor():
+	refresh links # optional; if not implemented in child class, do nothing
+	scrape content from all links 
+	for each link:
+		get all products on page
+		for each product:
+			if new or restock:
+				notify

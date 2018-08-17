@@ -1,7 +1,7 @@
 import requests
 import threading
 import time
-from . import discord_utils
+from frostcop.utils import discord_utils
 from bs4 import BeautifulSoup as bsoup
 from requests_futures.sessions import FuturesSession
 class monitor:
@@ -36,6 +36,7 @@ class monitor:
 		for link in self.links:
 			reqs += (session.get(link),)
 		self.responses = [r.result() for r in reqs]
+		print(self.responses)
 		self.soups = []
 		if self.needs_soup:
 			for resp in self.responses:
@@ -72,11 +73,12 @@ class monitor:
 		object generated from an address.
 		"""
 		print('souping')
-		return bsoup(response.content, 'lxml')
+		return bsoup(response.content, 'html.parser')
 
 	def run(self):
 		self.ctime = time.time()
 		self.refresh()
+		quit()
 		self.scrape()
 		threads = []
 		for i in range(len(self.links)):

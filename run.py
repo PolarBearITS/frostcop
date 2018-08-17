@@ -1,4 +1,8 @@
 import importlib
+import threading
+import sys
+sys.path.append('..')
+
 monitors = ['snkrs']
 
 def run_mon(mon):
@@ -16,4 +20,8 @@ for name in monitors:
 		m = getattr(importlib.import_module('monitors'), name)()
 	else:
 		m = getattr(importlib.import_module(f'monitors.{s[0]}'), s[1])()
-	run_mon(m)
+	t = threading.Thread(target=run_mon, args=(m,))
+	t.start()
+	threads.append(t)
+for t in threads:
+	t.join()
